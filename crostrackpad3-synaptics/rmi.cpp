@@ -15,12 +15,12 @@ static int rmi_write_report(PDEVICE_CONTEXT pDevice, uint8_t *report, size_t rep
 	command[0] = 0x00;
 	command[1] = 0x17;
 	command[2] = 0x00;
-	SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "RMI Write Report: ");
+	//SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "RMI Write Report: ");
 	for (int i = 0; i < report_size; i++) {
-		SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "0x%x ", report[i]);
+		//SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "0x%x ", report[i]);
 		command[i + 3] = report[i];
 	}
-	SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "\n");
+	//SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "\n");
 	SpbWriteDataSynchronously(&pDevice->I2CContext, 0x25, command, sizeof(command));
 	return 0;
 }
@@ -217,7 +217,7 @@ int rmi_scan_pdt(PDEVICE_CONTEXT pDevice)
 			break;
 	}
 
-	SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "%s: Done with PDT scan.\n", __func__);
+	SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "Done with PDT scan.\n");
 	retval = 0;
 
 error_exit:
@@ -461,8 +461,8 @@ static int rmi_populate_f11(PDEVICE_CONTEXT pDevice)
 			pDevice->x_size_mm = x_size / 10;
 			pDevice->y_size_mm = y_size / 10;
 
-			SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "%s: size in mm: %d x %d\n",
-				__func__, data->x_size_mm, data->y_size_mm);
+			SynaPrint(DEBUG_LEVEL_INFO, DBG_PNP, "size in mm: %d x %d\n",
+				pDevice->x_size_mm, pDevice->y_size_mm);
 
 			/*
 			* query 15 - 18 contain the size of the sensor
