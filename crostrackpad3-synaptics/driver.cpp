@@ -1236,7 +1236,7 @@ static int rmi_f30_input(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, ui
 	return pDevice->f30.report_size;
 }
 
-void TrackpadRawInput(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, uint8_t report[20], int tickinc) {
+void TrackpadRawInput(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, uint8_t report[40], int tickinc) {
 	if (report[0] != RMI_ATTN_REPORT_ID)
 		return;
 
@@ -1250,12 +1250,14 @@ void TrackpadRawInput(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, uint8
 	
 	int index = 2;
 
+	int reportSize = 40;
+
 	if (pDevice->f11.interrupt_base < pDevice->f30.interrupt_base) {
 		index += rmi_f11_input(pDevice, sc, &report[index]);
-		index += rmi_f30_input(pDevice, sc, report[1], &report[index], sizeof(report) - index);
+		index += rmi_f30_input(pDevice, sc, report[1], &report[index], reportSize - index);
 	}
 	else {
-		index += rmi_f30_input(pDevice, sc, report[1], &report[index], sizeof(report) - index);
+		index += rmi_f30_input(pDevice, sc, report[1], &report[index], reportSize - index);
 		index += rmi_f11_input(pDevice, sc, &report[index]);
 	}
 
@@ -1301,7 +1303,7 @@ void ProcessInfo(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, int infoVa
 		report.Value[i] = 0x00;
 	switch (infoValue) {
 	case 0: //driver version
-		strcpy((char *)report.Value, "3.0-synaptics beta 11.10 (8/15/2016)");
+		strcpy((char *)report.Value, "3.0-synaptics beta 11.10.1 (8/17/2016)");
 		break;
 	case 1: //product name
 		strcpy((char *)report.Value, sc->product_id);
