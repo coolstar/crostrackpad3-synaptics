@@ -1303,7 +1303,7 @@ void ProcessInfo(PDEVICE_CONTEXT pDevice, struct csgesture_softc *sc, int infoVa
 		report.Value[i] = 0x00;
 	switch (infoValue) {
 	case 0: //driver version
-		strcpy((char *)report.Value, "3.0-synaptics beta 11.10.1 (8/17/2016)");
+		strcpy((char *)report.Value, "3.0-synaptics (8/18/2016)");
 		break;
 	case 1: //product name
 		strcpy((char *)report.Value, sc->product_id);
